@@ -1,0 +1,4 @@
+
+#com.example.coupon.framework.config.WebAutoConfiguration
+#com.example.coupon.framework.config.IdempotentConfiguration
+#com.example.coupon.framework.config.CacheConfiguration

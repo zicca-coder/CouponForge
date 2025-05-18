@@ -5,11 +5,14 @@
     <option name="originalFiles">
       <list>
         <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/distribution/pom.xml" />
       </list>
     </option>
-  </component>
-  <component name="MavenRunner">
-    <option name="jreName" value="17" />
+    <option name="ignoredFiles">
+      <set>
+        <option value="$PROJECT_DIR$/distribution/pom.xml" />
+      </set>
+    </option>
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_17" default="true" project-jdk-name="17" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/out" />
