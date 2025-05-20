@@ -7,6 +7,7 @@
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/distribution/pom.xml" />
         <option value="$PROJECT_DIR$/framework/pom.xml" />
+        <option value="$PROJECT_DIR$/merchant-admin/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">
