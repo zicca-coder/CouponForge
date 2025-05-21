@@ -18,6 +18,8 @@ import com.example.coupon.merchant.admin.dto.req.CouponTemplatePageQueryReqDTO;
 import com.example.coupon.merchant.admin.dto.req.CouponTemplateSaveReqDTO;
 import com.example.coupon.merchant.admin.dto.resp.CouponTemplatePageQueryRespDTO;
 import com.example.coupon.merchant.admin.dto.resp.CouponTemplateQueryRespDTO;
+import com.example.coupon.merchant.admin.mq.event.CouponTemplateDelayEvent;
+import com.example.coupon.merchant.admin.mq.producer.CouponTemplateDelayExecuteStatusProducer;
 import com.example.coupon.merchant.admin.service.CouponTemplateService;
 import com.example.coupon.merchant.admin.service.basics.chain.MerchantAdminChainContext;
 import com.mzt.logapi.context.LogRecordContext;
@@ -40,6 +42,7 @@ public class CouponTemplateServiceImpl extends ServiceImpl<CouponTemplateMapper,
 
     private final CouponTemplateMapper couponTemplateMapper;
     private final MerchantAdminChainContext merchantAdminChainContext;
+    private final CouponTemplateDelayExecuteStatusProducer  couponTemplateDelayExecuteStatusProducer;
 
 
     /**
@@ -68,6 +71,15 @@ public class CouponTemplateServiceImpl extends ServiceImpl<CouponTemplateMapper,
 
         // 因为模板 ID 是运行中生成的，@LogRecord 默认拿不到，因此需要手动设置
         LogRecordContext.putVariable("binNo", couponTemplateDO.getId());
+
+        // 发送延时消息事件，优惠券模板活动到期修改优惠券模板状态
+        CouponTemplateDelayEvent templateDelayEvent = CouponTemplateDelayEvent.builder()
+                .shopNumber(UserContext.getShopNumber())
+                .couponTemplateId(couponTemplateDO.getId())
+                .delayTime(couponTemplateDO.getValidEndTime().getTime())
+                .build();
+        couponTemplateDelayExecuteStatusProducer.sendMessage(templateDelayEvent);
+
     }
 
     /**
