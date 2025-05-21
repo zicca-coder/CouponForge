@@ -10,10 +10,12 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import java.lang.reflect.Method;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 防止用户重复提交表单信息切面控制器
@@ -23,10 +25,17 @@ import java.lang.reflect.Method;
 public class NoDuplicateSubmitAspect {
 
     private final RedissonClient redissonClient;
+    private final RedisTemplate redisTemplate;
+
 
     @Around("@annotation(com.example.coupon.framework.idempotent.NoDuplicateSubmit)")
     public Object around(ProceedingJoinPoint joinPoint) throws Throwable {
         NoDuplicateSubmit noDuplicateSubmit = getNoDuplicateSubmitAnnotation(joinPoint);
+        // 获取幂等控制标识
+        String idempotentKey = String.format("no-duplicate-submit:idempotent:path:%s:currentUserId:%s:md5:%s", getServletPath(), getCurrentUserId(), calcArgsMD5(joinPoint));
+        if (redisTemplate.hasKey(idempotentKey)) {
+            throw new ClientException(noDuplicateSubmit.message());
+        }
         // 获取分布式锁标识
         String lockKey = String.format("no-duplicate-submit:lock:path:%s:currentUserId:%s:md5:%s", getServletPath(), getCurrentUserId(), calcArgsMD5(joinPoint));
         RLock lock = redissonClient.getLock(lockKey);
@@ -38,6 +47,7 @@ public class NoDuplicateSubmitAspect {
         try {
             // 执行加注解方法的原逻辑
             result = joinPoint.proceed();
+            redisTemplate.opsForValue().set(idempotentKey, "1", 5, TimeUnit.MINUTES); // 设置幂等时间
         } finally {
             lock.unlock();
         }
