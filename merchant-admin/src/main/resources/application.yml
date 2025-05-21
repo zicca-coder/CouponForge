@@ -2,17 +2,18 @@ spring:
   application:
     name: coupon-merchant-admin
   datasource:
-    url: jdbc:mysql://centos:3306/coupon?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=UTC
+    url: jdbc:mysql://192.168.17.128:3306/coupon?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=UTC
     username: root
     password: 1234
     driver-class-name: com.mysql.cj.jdbc.Driver
   data:
     redis:
-      host: centos
+      host: 192.168.17.128
       port: 6379
-      password:
 server:
   port: 10010
+  servlet:
+    context-path:
 
 mybatis-plus:
   configuration:
