@@ -1,8 +1,14 @@
 package com.example.coupon.merchant.admin.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.util.ObjectUtil;
+import com.alibaba.fastjson2.JSON;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.baomidou.mybatisplus.extension.toolkit.SqlHelper;
+import com.example.coupon.framework.exception.ClientException;
+import com.example.coupon.framework.exception.ServiceException;
 import com.example.coupon.merchant.admin.common.context.UserContext;
 import com.example.coupon.merchant.admin.common.enums.CouponTemplateStatusEnum;
 import com.example.coupon.merchant.admin.dao.entity.CouponTemplateDO;
@@ -19,7 +25,9 @@ import com.mzt.logapi.starter.annotation.LogRecord;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import static com.example.coupon.merchant.admin.common.constant.CouponTemplateConstant.CREATE_COUPON_TEMPLATE_LOG_CONTENT;
+import java.sql.Wrapper;
+
+import static com.example.coupon.merchant.admin.common.constant.CouponTemplateConstant.*;
 import static com.example.coupon.merchant.admin.common.enums.ChainBizMarkEnum.MERCHANT_ADMIN_CREATE_COUPON_TEMPLATE_KEY;
 
 
@@ -48,7 +56,7 @@ public class CouponTemplateServiceImpl extends ServiceImpl<CouponTemplateMapper,
     public void createCouponTemplate(CouponTemplateSaveReqDTO requestParam) {
         // 通过责任链验证请求参数是否正确
         merchantAdminChainContext.handler(MERCHANT_ADMIN_CREATE_COUPON_TEMPLATE_KEY.name(), requestParam);
-        LogRecordContext.putVariable("originalData", requestParam);
+        LogRecordContext.putVariable("originalData", JSON.toJSONString(requestParam));
 
         // 新增优惠券模板信息到数据库
         CouponTemplateDO couponTemplateDO = BeanUtil.toBean(requestParam, CouponTemplateDO.class);
@@ -84,17 +92,64 @@ public class CouponTemplateServiceImpl extends ServiceImpl<CouponTemplateMapper,
      * 停用优惠券模板
      * @param couponTemplateId 优惠券模板id
      */
+    @LogRecord(
+            success = TERMINATE_COUPON_TEMPLATE_LOG_CONTENT,
+            type = "CouponTemplate",
+            bizNo = "{{#couponTemplateId}}"
+    )
     @Override
     public void terminateCouponTemplate(String couponTemplateId) {
+        // 验证是否存在数据横向越权
+        CouponTemplateDO couponTemplateDO = lambdaQuery().eq(CouponTemplateDO::getShopNumber, UserContext.getShopNumber())
+                .eq(CouponTemplateDO::getId, couponTemplateId)
+                .one();
+        if (couponTemplateDO == null) {
+            throw new ClientException("优惠券模板异常，请检查操作是否正确...");
+        }
 
+        if (ObjectUtil.notEqual(couponTemplateDO.getStatus(), CouponTemplateStatusEnum.ACTIVE.getStatus())) {
+            throw new ClientException("优惠券模板已停用，请勿重复操作...");
+        }
+
+        // 记录优惠券模板修改前数据
+        LogRecordContext.putVariable("originalData", JSON.toJSONString(couponTemplateDO));
+
+        // 修改优惠券模板状态为结束状态
+        lambdaUpdate().eq(CouponTemplateDO::getId, couponTemplateId)
+                .eq(CouponTemplateDO::getShopNumber, UserContext.getShopNumber())
+                .set(CouponTemplateDO::getStatus, CouponTemplateStatusEnum.ENDED.getStatus())
+                .update();
     }
 
     /**
      * 增加优惠券模板库存
      * @param requestParam 请求参数
      */
+    @LogRecord(
+            success = INCREASE_NUMBER_COUPON_TEMPLATE_LOG_CONTENT,
+            type = "CouponTemplate",
+            bizNo = "{{#requestParam.couponTemplateId}}"
+    )
     @Override
     public void increaseNumberCouponTemplate(CouponTemplateNumberReqDTO requestParam) {
+        // 验证是否存在数据横向越权
+        CouponTemplateDO couponTemplateDO = lambdaQuery().eq(CouponTemplateDO::getShopNumber, UserContext.getShopNumber())
+                .eq(CouponTemplateDO::getId, requestParam.getCouponTemplateId())
+                .one();
+        if (couponTemplateDO == null) {
+            throw new ClientException("优惠券模板异常，请检查操作是否正确...");
+        }
+        // 验证优惠券模板是否已经结束
+        if (ObjectUtil.notEqual(couponTemplateDO.getStatus(), CouponTemplateStatusEnum.ACTIVE.getStatus())) {
+            throw new ClientException("优惠券模板已停用，请勿重复操作...");
+        }
+        // 记录优惠券模板修改前数据
+        LogRecordContext.putVariable("originalData", JSON.toJSONString(couponTemplateDO));
+
+        int increated = couponTemplateMapper.increaseNumberCouponTemplate(requestParam.getCouponTemplateId(), UserContext.getShopNumber(), requestParam.getNumber());
+        if (!SqlHelper.retBool(increated)) {
+            throw new ServiceException("优惠券模板增加发行量失败...");
+        }
 
     }
 }

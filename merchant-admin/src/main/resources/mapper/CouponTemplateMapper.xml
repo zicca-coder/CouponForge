@@ -1,0 +1,14 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.coupon.merchant.admin.dao.mapper.CouponTemplateMapper">
+
+    <!--增加优惠券模板发行量-->
+    <update id="increaseNumberCouponTemplate">
+        UPDATE t_coupon_template
+        SET stock = stock + #{number}
+        WHERE id = #{couponTemplateId}
+        AND shop_number = #{shopNumber}
+    </update>
+
+</mapper>

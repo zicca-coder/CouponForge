@@ -4,6 +4,7 @@ package com.example.coupon.merchant.admin.controller;
 import com.example.coupon.framework.idempotent.NoDuplicateSubmit;
 import com.example.coupon.framework.result.Result;
 import com.example.coupon.framework.web.Results;
+import com.example.coupon.merchant.admin.dto.req.CouponTemplateNumberReqDTO;
 import com.example.coupon.merchant.admin.dto.req.CouponTemplateSaveReqDTO;
 import com.example.coupon.merchant.admin.service.CouponTemplateService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -33,6 +34,26 @@ public class CouponTemplateController {
         couponTemplateService.createCouponTemplate(requestParam);
         return Results.success();
     }
+
+
+    @Operation(summary = "商家增加优惠券模板发行量")
+    @NoDuplicateSubmit(message = "请勿短时间内重复增加优惠券发行量")
+    @PostMapping("/coupon-template/increase-number")
+    public Result<Void> increaseNumberCouponTemplate(@RequestBody CouponTemplateNumberReqDTO requestParam) {
+        couponTemplateService.increaseNumberCouponTemplate(requestParam);
+        return Results.success();
+    }
+
+
+    @Operation(summary = "商家终止优惠券模板")
+    @PostMapping("/coupon-template/terminate")
+    public Result<Void> terminateCouponTemplate(String couponTemplateId) {
+        couponTemplateService.terminateCouponTemplate(couponTemplateId);
+        return Results.success();
+    }
+
+
+
 
 
 }
