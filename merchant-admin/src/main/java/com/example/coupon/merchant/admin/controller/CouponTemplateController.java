@@ -1,6 +1,7 @@
 package com.example.coupon.merchant.admin.controller;
 
 
+import com.example.coupon.framework.idempotent.NoDuplicateSubmit;
 import com.example.coupon.framework.result.Result;
 import com.example.coupon.framework.web.Results;
 import com.example.coupon.merchant.admin.dto.req.CouponTemplateSaveReqDTO;
@@ -27,6 +28,7 @@ public class CouponTemplateController {
 
     @Operation(summary = "商家创建优惠券模板")
     @PostMapping("/coupon-template/create")
+    @NoDuplicateSubmit(message = "请勿短时间内重复提交优惠券模板")
     public Result<Void> createCouponTemplate(@RequestBody CouponTemplateSaveReqDTO requestParam) {
         couponTemplateService.createCouponTemplate(requestParam);
         return Results.success();

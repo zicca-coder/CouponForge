@@ -39,6 +39,6 @@ public class SwaggerConfiguration implements ApplicationRunner {
      */
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        log.info("API Document: http://127.0.0.1:{}{}/doc.html", serverPort, contextPath);
+        log.info("API Document: http://localhost:{}{}/doc.html", serverPort, contextPath);
     }
 }
