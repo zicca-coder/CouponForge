@@ -39,6 +39,19 @@ knife4j:
   setting:
     language: zh_cn
 
+xxl-job:
+  enable: true
+  access-token: deault_token
+  admin:
+    address: http://localhost:8088/xxl-job-admin
+  executor:
+    application-name: coupon-merchant-admin
+    ip: 127.0.0.1
+    log_retention-days: 30
+    port: 19999
+#    log-path: E:/xxl-job-log
+
+
 rocketmq:
   name-server: common-rocketmq-dev.magestack.cn:9876
   producer:

@@ -87,11 +87,11 @@
             <scope>test</scope>
         </dependency>
 
-<!--        &lt;!&ndash; 定时任务相关依赖 &ndash;&gt;-->
-<!--        <dependency>-->
-<!--            <groupId>com.xuxueli</groupId>-->
-<!--            <artifactId>xxl-job-core</artifactId>-->
-<!--        </dependency>-->
+        <!-- 定时任务相关依赖 -->
+        <dependency>
+            <groupId>com.xuxueli</groupId>
+            <artifactId>xxl-job-core</artifactId>
+        </dependency>
 
         <!-- 消息队列相关依赖 -->
         <dependency>

@@ -18,6 +18,8 @@ import com.example.coupon.merchant.admin.dto.req.CouponTaskCreateReqDTO;
 import com.example.coupon.merchant.admin.dto.req.CouponTaskPageQueryReqDTO;
 import com.example.coupon.merchant.admin.dto.resp.CouponTaskQueryRespDTO;
 import com.example.coupon.merchant.admin.dto.resp.CouponTemplateQueryRespDTO;
+import com.example.coupon.merchant.admin.mq.event.CouponTaskExecuteEvent;
+import com.example.coupon.merchant.admin.mq.producer.CouponTaskActualExecuteProducer;
 import com.example.coupon.merchant.admin.service.CouponTaskService;
 import com.example.coupon.merchant.admin.service.CouponTemplateService;
 import com.example.coupon.merchant.admin.service.handler.excel.RowCountListener;
@@ -39,6 +41,7 @@ public class CouponTaskServiceImpl extends ServiceImpl<CouponTaskMapper, CouponT
     private final CouponTaskMapper couponTaskMapper;
     private final CouponTemplateService couponTemplateService;
     private final RedissonClient redissonClient;
+    private final CouponTaskActualExecuteProducer couponTaskActualExecuteProducer;
 
     /**
      *
@@ -80,7 +83,7 @@ public class CouponTaskServiceImpl extends ServiceImpl<CouponTaskMapper, CouponT
         couponTaskDO.setOperatorId(Long.parseLong(UserContext.getUserId()));
         couponTaskDO.setShopNumber(UserContext.getShopNumber());
         couponTaskDO.setStatus(
-                Objects.equals(requestParam.getSendType(), CouponTaskSendTypeEnum.IMMEDIATELY.getType())
+                Objects.equals(requestParam.getSendType(), CouponTaskSendTypeEnum.IMMEDIATE.getType())
                         ? CouponTaskStatusEnum.IN_PROGRESS.getStatus()
                         : CouponTaskStatusEnum.PENDING.getStatus()
         );
@@ -101,6 +104,15 @@ public class CouponTaskServiceImpl extends ServiceImpl<CouponTaskMapper, CouponT
         RDelayedQueue<Object> delayedQueue = redissonClient.getDelayedQueue(blockingDeque);
         // 这里延迟时间设置 20 秒，实际生产中可以动态配置，比如根据任务类型，或者任务量动态配置延迟时间
         delayedQueue.offer(delayJsonObject, 20, TimeUnit.SECONDS);
+
+
+        // 如果是立即推送型任务，直接调用消息队列进行发送流程
+        // 如果是定时推送型任务，则采用 xxl-job 定时扫描触发
+        if (ObjectUtil.equals(requestParam.getSendType(), CouponTaskSendTypeEnum.IMMEDIATE.getType())) {
+            // 执行优惠券推送业务，正式向用户发放优惠券
+            CouponTaskExecuteEvent couponTaskExecuteEvent = CouponTaskExecuteEvent.builder().couponTaskId(couponTaskDO.getId()).build();
+            couponTaskActualExecuteProducer.sendMessage(couponTaskExecuteEvent);
+        }
     }
 
     @Override

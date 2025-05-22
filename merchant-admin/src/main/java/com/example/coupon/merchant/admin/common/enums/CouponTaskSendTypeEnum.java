@@ -12,7 +12,7 @@ public enum CouponTaskSendTypeEnum {
     /**
      * 立即发送
      */
-    IMMEDIATELY(0),
+    IMMEDIATE(0),
 
     /**
      * 定时发送
