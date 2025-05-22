@@ -22,7 +22,7 @@ public class CouponTaskCreateReqDTO {
     @Schema(description = "优惠券批次任务名称",
             // step1 调用 ExcelGenerateTests 里的单元测试用例，生成 Excel 测试示例文件
             // step2 复制项目目录下 tmp/oneCoupon任务推送Excel 的绝对路径，Windows 和 Mac 下有些许区别，Windows 下应该是 D:\Users\xxx\xxx
-            example = "/Users/machen/workspace/nageoffer/onecoupon/tmp/oneCoupon任务推送Excel.xlsx",
+            example = "E:/excel/coupon任务推送Excel.xlsx",
             required = true)
     private String fileAddress;
 
@@ -38,7 +38,7 @@ public class CouponTaskCreateReqDTO {
      * 优惠券模板id
      */
     @Schema(description = "优惠券模板id",
-            example = "1810966706881941507",
+            example = "1925153988556066817",
             required = true)
     private String couponTemplateId;
 
@@ -53,7 +53,10 @@ public class CouponTaskCreateReqDTO {
     /**
      * 发送时间
      */
-    @Schema(description = "发送时间", example = "2024-08-20 12:00:00")
+    @Schema(description = "发送时间",
+            example = "2025-08-20 12:00:00",
+            required = true,
+            format = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date sendTime;
 }

@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/merchant-admin")
+@RequestMapping("/api/merchant-admin/coupon-template")
 @Tag(name = "优惠券模板管理")
 public class CouponTemplateController {
 
@@ -28,7 +28,7 @@ public class CouponTemplateController {
 
 
     @Operation(summary = "商家创建优惠券模板")
-    @PostMapping("/coupon-template/create")
+    @PostMapping("/create")
     @NoDuplicateSubmit(message = "请勿短时间内重复提交优惠券模板")
     public Result<Void> createCouponTemplate(@RequestBody CouponTemplateSaveReqDTO requestParam) {
         couponTemplateService.createCouponTemplate(requestParam);
@@ -38,7 +38,7 @@ public class CouponTemplateController {
 
     @Operation(summary = "商家增加优惠券模板发行量")
     @NoDuplicateSubmit(message = "请勿短时间内重复增加优惠券发行量")
-    @PostMapping("/coupon-template/increase-number")
+    @PostMapping("/increase-number")
     public Result<Void> increaseNumberCouponTemplate(@RequestBody CouponTemplateNumberReqDTO requestParam) {
         couponTemplateService.increaseNumberCouponTemplate(requestParam);
         return Results.success();
@@ -46,7 +46,7 @@ public class CouponTemplateController {
 
 
     @Operation(summary = "商家终止优惠券模板")
-    @PostMapping("/coupon-template/terminate")
+    @PostMapping("/terminate")
     public Result<Void> terminateCouponTemplate(String couponTemplateId) {
         couponTemplateService.terminateCouponTemplate(couponTemplateId);
         return Results.success();
