@@ -200,6 +200,13 @@ public class CouponTemplateServiceImpl extends ServiceImpl<CouponTemplateMapper,
                 .eq(CouponTemplateDO::getShopNumber, UserContext.getShopNumber())
                 .set(CouponTemplateDO::getStatus, CouponTemplateStatusEnum.ENDED.getStatus())
                 .update();
+
+        // 修改优惠券模板缓存状态为结束状态
+        // todo: 数据一致性如何保证？？？？
+        String couponTemplateCacheKey = MerchantAdminRedisConstant.COUPON_TEMPLATE_KEY + couponTemplateId;
+        stringRedisTemplate.opsForHash().put(couponTemplateCacheKey, "status", CouponTemplateStatusEnum.ENDED.getStatus());
+        log.info("优惠券模板ID:{}同步修改状态为ENDED状态...", couponTemplateId);
+
     }
 
     /**
@@ -231,6 +238,11 @@ public class CouponTemplateServiceImpl extends ServiceImpl<CouponTemplateMapper,
         if (!SqlHelper.retBool(increated)) {
             throw new ServiceException("优惠券模板增加发行量失败...");
         }
+
+        // 同步修改缓存中的优惠券模板库存
+        // todo: 数据一致性如何保证？？？？
+        String couponTemplateCacheKey = MerchantAdminRedisConstant.COUPON_TEMPLATE_KEY + requestParam.getCouponTemplateId();
+        stringRedisTemplate.opsForHash().increment(couponTemplateCacheKey, "stock", requestParam.getNumber());
 
     }
 }
