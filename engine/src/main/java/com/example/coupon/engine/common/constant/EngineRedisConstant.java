@@ -1,0 +1,27 @@
+package com.example.coupon.engine.common.constant;
+
+/**
+ * 分布式 Redis 缓存引擎层常量类
+ */
+public class EngineRedisConstant {
+
+    /**
+     * 优惠券模板缓存 Key
+     */
+    public static final String COUPON_TEMPLATE_KEY = "coupon:template:%s";
+
+
+    /**
+     * 优惠券模板缓存空值 Key
+     *      用于解决缓存穿透问题，当查询数据库中没有该优惠券模板后，将请求中传来的 id 缓存到 redis （COUPON_TEMPLATE_NOT_EXIST） 中
+     *      当下次请求再来时，如果缓存中有该id，证明不存在，返回空值
+     */
+    public static final String COUPON_TEMPLATE_NOT_EXIST = "coupon:template:not_exist:%s";
+
+
+    /**
+     * 优惠券模板缓存分布式锁 Key
+     */
+    public static final String COUPON_TEMPLATE_LOCK_KEY = "coupon:template:lock:%s";
+
+}

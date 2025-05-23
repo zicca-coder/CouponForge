@@ -1,4 +1,4 @@
-package com.example.coupon.merchant.admin.config;
+package com.example.coupon.engine.config;
 
 import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
@@ -6,17 +6,13 @@ import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
 import org.apache.ibatis.reflection.MetaObject;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 
-import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
- * 数据库持久层配置 | 配置 MyBatis-Plus 相关插件
+ * 数据库持久配置层类
  */
-@Configuration
 public class DataBaseConfiguration {
-
 
     /**
      * MyBatis-Plus 分页插件
@@ -49,8 +45,4 @@ public class DataBaseConfiguration {
             strictUpdateFill(metaObject, "updateTime", Date::new, Date.class);
         }
     }
-
-
-
-
 }

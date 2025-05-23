@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="930962b7-3e5e-436c-8225-e575408c149b" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/common/constant/EngineRedisConstant.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/common/context/UserContext.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/common/context/UserInfoDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/common/enums/CouponRemindTypeEnum.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/common/enums/CouponTemplateStatusEnum.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/common/enums/RedisStockDecrementErrorEnum.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/common/enums/UserCouponStatusEnum.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/config/DataBaseConfiguration.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/config/RBloomFilterConfiguration.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/config/SwaggerConfiguration.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/config/UserConfiguration.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/controller/CouponTemplateController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/dao/entity/CouponSettlementDO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/dao/entity/CouponTemplateDO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/dao/entity/CouponTemplateRemindDO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/dao/entity/UserCouponDO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/dao/mapper/CouponSettlementMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/dao/mapper/CouponTemplateMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/dao/mapper/CouponTemplateRemindMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/dao/mapper/UserCouponMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/dto/req/CouponCreatePaymentGoodsReqDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/dto/req/CouponCreatePaymentReqDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/dto/req/CouponProcessPaymentReqDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/dto/req/CouponProcessRefundReqDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/dto/req/CouponTemplateQueryReqDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/dto/req/CouponTemplateRedeemReqDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/dto/req/CouponTemplateRemindCancelReqDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/dto/req/CouponTemplateRemindCreateReqDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/dto/req/CouponTemplateRemindQueryReqDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/dto/resp/CouponTemplateQueryRespDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/dto/resp/CouponTemplateRemindQueryRespDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/service/CouponTemplateService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/service/impl/CouponTemplateServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/framework/src/main/java/com/example/coupon/framework/config/CacheConfiguration.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/framework/src/main/java/com/example/coupon/framework/config/RedisDistributedProperties.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/framework/src/main/java/com/example/coupon/framework/config/RedisKeySerializer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant-admin/src/main/java/com/example/coupon/merchant/admin/common/constant/MerchantAdminRedisConstant.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant-admin/src/main/java/com/example/coupon/merchant/admin/config/RBloomFilterConfiguration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.cache/.Apifox_Helper/.toolWindow.db" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/framework/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports" beforeDir="false" afterPath="$PROJECT_DIR$/framework/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/merchant-admin/src/main/java/com/example/coupon/merchant/admin/config/DataBaseConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/merchant-admin/src/main/java/com/example/coupon/merchant/admin/config/DataBaseConfiguration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/merchant-admin/src/main/java/com/example/coupon/merchant/admin/service/impl/CouponTemplateServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/merchant-admin/src/main/java/com/example/coupon/merchant/admin/service/impl/CouponTemplateServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/merchant-admin/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/merchant-admin/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Enum" />
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "zicca-coder"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/zicca-coder/CouponForge",
+    "accountId": "66da9767-d495-4246-8886-636d6c7c8635"
+  }
+}]]></component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/engine/pom.xml" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/common/enums/CouponTemplateStatusEnum.java" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/dto/req/CouponCreatePaymentReqDTO.java" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/service/impl/CouponTemplateServiceImpl.java" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/framework/src/main/java/com/example/coupon/framework/config/RedisDistributedProperties.java" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/framework/src/main/java/com/example/coupon/framework/idempotent/NoDuplicateSubmitAspect.java" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/merchant-admin/pom.xml" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/merchant-admin/src/main/java/com/example/coupon/merchant/admin/service/impl/CouponTemplateServiceImpl.java" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/merchant-admin/src/main/resources/application.yml" root0="SKIP_INSPECTION" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="customMavenHome" value="C:\develop\maven\apache-maven-3.9.9" />
+        <option name="localRepository" value="C:\develop\maven\apache-maven-3.9.9\maven_repo" />
+        <option name="mavenHomeTypeForPersistence" value="CUSTOM" />
+        <option name="userSettingsFile" value="C:\develop\maven\apache-maven-3.9.9\conf\settings.xml" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="MavenRunner">
+    <option name="jreName" value="17" />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 0
+}]]></component>
+  <component name="ProjectId" id="2xTlJzyWIVP57ZdeqT5Hw3Vj4D6" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "Spring Boot.EngineApplication.executor": "Run",
+    "Spring Boot.MerchantAdminApplication.executor": "Run",
+    "git-widget-placeholder": "master",
+    "jdk.selected.JAVA_MODULE": "17",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "E:/workspace/CouponForge",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "reference.projectsettings.compiler.javacompiler",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.example.coupon.engine.config" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Spring Boot.MerchantAdminApplication">
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="coupon-all" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="coupon-all" />
+      <option name="filePath" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="EngineApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="coupon-engine" />
+      <option name="SHORTEN_COMMAND_LINE" value="ARGS_FILE" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.coupon.engine.EngineApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="MerchantAdminApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="coupon-merchant-admin" />
+      <option name="SHORTEN_COMMAND_LINE" value="ARGS_FILE" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.coupon.merchant.admin.MerchantAdminApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <option name="SHORTEN_COMMAND_LINE" value="ARGS_FILE" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-28b599e66164-intellij.indexing.shared.core-IU-242.23339.11" />
+        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-IU-242.23339.11" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="930962b7-3e5e-436c-8225-e575408c149b" name="Changes" comment="" />
+      <created>1747969876694</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1747969876694</updated>
+      <workItem from="1747969877744" duration="14850000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
