@@ -52,7 +52,7 @@ public class CouponTemplateServiceImpl extends ServiceImpl<CouponTemplateMapper,
     @Override
     public CouponTemplateQueryRespDTO findCouponTemplate(CouponTemplateQueryReqDTO requestParam) {
         // 查询缓存中否有优惠券模板信息
-        String couponTemplateCacheKey = String.format(EngineRedisConstant.COUPON_TEMPLATE_KEY, requestParam.getCouponTemplateId());
+        String couponTemplateCacheKey = EngineRedisConstant.COUPON_TEMPLATE_KEY + requestParam.getCouponTemplateId();
         // 返回 Key 为  coupon:template:{couponTemplateId} 的Hash表的所有字段和值，以Map<Object, Object>的形式返回
         Map<Object, Object> couponTemplateCacheMap = stringRedisTemplate.opsForHash().entries(couponTemplateCacheKey);
 
@@ -65,7 +65,7 @@ public class CouponTemplateServiceImpl extends ServiceImpl<CouponTemplateMapper,
             }
 
             // 查询 Redis COUPON_TEMPLATE_NOT-EXIST缓存中是否有
-            String couponTemplateNotExistCacheKey = String.format(EngineRedisConstant.COUPON_TEMPLATE_NOT_EXIST, requestParam.getCouponTemplateId());
+            String couponTemplateNotExistCacheKey = EngineRedisConstant.COUPON_TEMPLATE_NOT_EXIST + requestParam.getCouponTemplateId();
             Boolean hasKeyFlag = stringRedisTemplate.hasKey(couponTemplateNotExistCacheKey);
             if (hasKeyFlag) {
                 log.error("第一重判定 -> 【NOT-EXIST缓存】中存在该优惠券 ID:{}", requestParam.getCouponTemplateId());
@@ -74,7 +74,7 @@ public class CouponTemplateServiceImpl extends ServiceImpl<CouponTemplateMapper,
 
             // 查询数据库
             // 获取优惠券模板分布式锁
-            RLock lock = redissonClient.getLock(String.format(EngineRedisConstant.COUPON_TEMPLATE_LOCK_KEY, requestParam.getCouponTemplateId()));
+            RLock lock = redissonClient.getLock(EngineRedisConstant.COUPON_TEMPLATE_LOCK_KEY + requestParam.getCouponTemplateId());
             lock.lock();
             try {
                 // 多个线程同时抢占分布式锁，最终只能有一个线程获取锁，并执行缓存重建（若数据库存在，则重建缓存若数据库中不存在在假如NOT-EXIST缓存）

@@ -4,55 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="930962b7-3e5e-436c-8225-e575408c149b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/common/constant/EngineRedisConstant.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/common/context/UserContext.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/common/context/UserInfoDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/common/enums/CouponRemindTypeEnum.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/common/enums/CouponTemplateStatusEnum.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/common/enums/RedisStockDecrementErrorEnum.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/common/enums/UserCouponStatusEnum.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/config/DataBaseConfiguration.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/config/RBloomFilterConfiguration.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/config/SwaggerConfiguration.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/config/UserConfiguration.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/controller/CouponTemplateController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/dao/entity/CouponSettlementDO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/dao/entity/CouponTemplateDO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/dao/entity/CouponTemplateRemindDO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/dao/entity/UserCouponDO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/dao/mapper/CouponSettlementMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/dao/mapper/CouponTemplateMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/dao/mapper/CouponTemplateRemindMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/dao/mapper/UserCouponMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/dto/req/CouponCreatePaymentGoodsReqDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/dto/req/CouponCreatePaymentReqDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/dto/req/CouponProcessPaymentReqDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/dto/req/CouponProcessRefundReqDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/dto/req/CouponTemplateQueryReqDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/dto/req/CouponTemplateRedeemReqDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/dto/req/CouponTemplateRemindCancelReqDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/dto/req/CouponTemplateRemindCreateReqDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/dto/req/CouponTemplateRemindQueryReqDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/dto/resp/CouponTemplateQueryRespDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/dto/resp/CouponTemplateRemindQueryRespDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/service/CouponTemplateService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/service/impl/CouponTemplateServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/framework/src/main/java/com/example/coupon/framework/config/CacheConfiguration.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/framework/src/main/java/com/example/coupon/framework/config/RedisDistributedProperties.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/framework/src/main/java/com/example/coupon/framework/config/RedisKeySerializer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/merchant-admin/src/main/java/com/example/coupon/merchant/admin/common/constant/MerchantAdminRedisConstant.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/merchant-admin/src/main/java/com/example/coupon/merchant/admin/config/RBloomFilterConfiguration.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.cache/.Apifox_Helper/.toolWindow.db" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/framework/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports" beforeDir="false" afterPath="$PROJECT_DIR$/framework/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/merchant-admin/src/main/java/com/example/coupon/merchant/admin/config/DataBaseConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/merchant-admin/src/main/java/com/example/coupon/merchant/admin/config/DataBaseConfiguration.java" afterDir="false" />
+    <list default="true" id="930962b7-3e5e-436c-8225-e575408c149b" name="Changes" comment="新增engine模块：增加查询优惠券模板接口，并通过缓存预热、设置缓存过期时间、双重判定锁来解决缓存击穿问题。通过缓存空置、布隆过滤器来解决缓存穿透问题。">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/common/constant/EngineRedisConstant.java" beforeDir="false" afterPath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/common/constant/EngineRedisConstant.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/config/RBloomFilterConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/config/RBloomFilterConfiguration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/service/impl/CouponTemplateServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/service/impl/CouponTemplateServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/engine/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/framework/src/main/java/com/example/coupon/framework/idempotent/NoDuplicateSubmitAspect.java" beforeDir="false" afterPath="$PROJECT_DIR$/framework/src/main/java/com/example/coupon/framework/idempotent/NoDuplicateSubmitAspect.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/merchant-admin/src/main/java/com/example/coupon/merchant/admin/common/constant/MerchantAdminRedisConstant.java" beforeDir="false" afterPath="$PROJECT_DIR$/merchant-admin/src/main/java/com/example/coupon/merchant/admin/common/constant/MerchantAdminRedisConstant.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/merchant-admin/src/main/java/com/example/coupon/merchant/admin/config/RBloomFilterConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/merchant-admin/src/main/java/com/example/coupon/merchant/admin/config/RBloomFilterConfiguration.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/merchant-admin/src/main/java/com/example/coupon/merchant/admin/service/impl/CouponTemplateServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/merchant-admin/src/main/java/com/example/coupon/merchant/admin/service/impl/CouponTemplateServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/merchant-admin/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/merchant-admin/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -143,12 +105,15 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
+  <component name="ReactorSettings">
+    <option name="notificationShown" value="true" />
+  </component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="com.example.coupon.engine.config" />
     </key>
   </component>
-  <component name="RunManager" selected="Spring Boot.MerchantAdminApplication">
+  <component name="RunManager" selected="Spring Boot.EngineApplication">
     <configuration default="true" type="JetRunConfigurationType">
       <module name="coupon-all" />
       <method v="2">
@@ -201,11 +166,24 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1747969876694</updated>
-      <workItem from="1747969877744" duration="14850000" />
+      <workItem from="1747969877744" duration="19137000" />
     </task>
+    <task id="LOCAL-00001" summary="新增engine模块：增加查询优惠券模板接口，并通过缓存预热、设置缓存过期时间、双重判定锁来解决缓存击穿问题。通过缓存空置、布隆过滤器来解决缓存穿透问题。">
+      <option name="closed" value="true" />
+      <created>1747986640770</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1747986640770</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="新增engine模块：增加查询优惠券模板接口，并通过缓存预热、设置缓存过期时间、双重判定锁来解决缓存击穿问题。通过缓存空置、布隆过滤器来解决缓存穿透问题。" />
+    <option name="LAST_COMMIT_MESSAGE" value="新增engine模块：增加查询优惠券模板接口，并通过缓存预热、设置缓存过期时间、双重判定锁来解决缓存击穿问题。通过缓存空置、布隆过滤器来解决缓存穿透问题。" />
   </component>
 </project>

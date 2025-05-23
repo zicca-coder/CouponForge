@@ -8,5 +8,11 @@ public class MerchantAdminRedisConstant {
     /**
      * 优惠券模板缓存 Key
      */
-    public static final String COUPON_TEMPLATE_KEY = "coupon:template:%s";
+    public static final String COUPON_TEMPLATE_KEY = "coupon:cache:template:exist:";
+
+    /**
+     * 布隆过滤器缓存统一前缀
+     */
+    public static final String COUPON_TEMPLATE_QUERY_BLOOM_FILTER_PREFIX = "coupon:filter:template:";
+
 }

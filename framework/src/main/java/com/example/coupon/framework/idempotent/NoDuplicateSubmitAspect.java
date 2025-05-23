@@ -11,6 +11,7 @@ import org.aspectj.lang.reflect.MethodSignature;
 import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -25,19 +26,18 @@ import java.util.concurrent.TimeUnit;
 public class NoDuplicateSubmitAspect {
 
     private final RedissonClient redissonClient;
-    private final RedisTemplate redisTemplate;
-
+    private final StringRedisTemplate stringRedisTemplate;
 
     @Around("@annotation(com.example.coupon.framework.idempotent.NoDuplicateSubmit)")
     public Object around(ProceedingJoinPoint joinPoint) throws Throwable {
         NoDuplicateSubmit noDuplicateSubmit = getNoDuplicateSubmitAnnotation(joinPoint);
         // 获取幂等控制标识
-        String idempotentKey = String.format("no-duplicate-submit:idempotent:path:%s:currentUserId:%s:md5:%s", getServletPath(), getCurrentUserId(), calcArgsMD5(joinPoint));
-        if (redisTemplate.hasKey(idempotentKey)) {
+        String idempotentKey = String.format("coupon:idempotent:path:%s:currentUserId:%s:md5:%s", getServletPath(), getCurrentUserId(), calcArgsMD5(joinPoint));
+        if (stringRedisTemplate.hasKey(idempotentKey)) {
             throw new ClientException(noDuplicateSubmit.message());
         }
         // 获取分布式锁标识
-        String lockKey = String.format("no-duplicate-submit:lock:path:%s:currentUserId:%s:md5:%s", getServletPath(), getCurrentUserId(), calcArgsMD5(joinPoint));
+        String lockKey = String.format("coupon:lock:path:%s:currentUserId:%s:md5:%s", getServletPath(), getCurrentUserId(), calcArgsMD5(joinPoint));
         RLock lock = redissonClient.getLock(lockKey);
         // 尝试获取锁，如果获取失败，则证明重复提交，抛出异常
         if (!lock.tryLock()) {
@@ -47,7 +47,7 @@ public class NoDuplicateSubmitAspect {
         try {
             // 执行加注解方法的原逻辑
             result = joinPoint.proceed();
-            redisTemplate.opsForValue().set(idempotentKey, "1", 5, TimeUnit.MINUTES); // 设置幂等时间
+            stringRedisTemplate.opsForValue().set(idempotentKey, "1", 5, TimeUnit.MINUTES); // 设置幂等时间
         } finally {
             lock.unlock();
         }

@@ -45,8 +45,3 @@ server:
   port: 10020
   servlet:
     context-path:
-
-framework:
-  cache:
-    redis:
-      prefix: coupon:engine:%s

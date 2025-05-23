@@ -59,7 +59,6 @@ public class CouponTemplateServiceImpl extends ServiceImpl<CouponTemplateMapper,
     private final RBloomFilter<String> couponTemplateQueryBloomFilter;
 
 
-
     /**
      * 创建优惠券模板
      * @param requestParam 请求参数
@@ -99,7 +98,7 @@ public class CouponTemplateServiceImpl extends ServiceImpl<CouponTemplateMapper,
                         Map.Entry::getKey,
                         entry -> entry.getValue() != null ? entry.getValue().toString() : ""
                 ));
-        String couponTemplateCacheKey = String.format(MerchantAdminRedisConstant.COUPON_TEMPLATE_KEY, couponTemplateDO.getId());
+        String couponTemplateCacheKey = MerchantAdminRedisConstant.COUPON_TEMPLATE_KEY + couponTemplateDO.getId();
 
         // 通过 LUA 脚本设置 Hahs 数据以及设置过期时间
         /**
@@ -131,6 +130,7 @@ public class CouponTemplateServiceImpl extends ServiceImpl<CouponTemplateMapper,
                 keys,
                 args.toArray()
         );
+        log.info("优惠券模板ID:{}已添加至【Redis】...", couponTemplateDO.getId());
 
 
         // 发送延时消息事件，优惠券模板活动到期修改优惠券模板状态
