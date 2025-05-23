@@ -4,17 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="930962b7-3e5e-436c-8225-e575408c149b" name="Changes" comment="新增engine模块：增加查询优惠券模板接口，并通过缓存预热、设置缓存过期时间、双重判定锁来解决缓存击穿问题。通过缓存空置、布隆过滤器来解决缓存穿透问题。">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/common/constant/EngineRedisConstant.java" beforeDir="false" afterPath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/common/constant/EngineRedisConstant.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/config/RBloomFilterConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/config/RBloomFilterConfiguration.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/service/impl/CouponTemplateServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/service/impl/CouponTemplateServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/engine/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/engine/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/framework/src/main/java/com/example/coupon/framework/idempotent/NoDuplicateSubmitAspect.java" beforeDir="false" afterPath="$PROJECT_DIR$/framework/src/main/java/com/example/coupon/framework/idempotent/NoDuplicateSubmitAspect.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/merchant-admin/src/main/java/com/example/coupon/merchant/admin/common/constant/MerchantAdminRedisConstant.java" beforeDir="false" afterPath="$PROJECT_DIR$/merchant-admin/src/main/java/com/example/coupon/merchant/admin/common/constant/MerchantAdminRedisConstant.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/merchant-admin/src/main/java/com/example/coupon/merchant/admin/config/RBloomFilterConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/merchant-admin/src/main/java/com/example/coupon/merchant/admin/config/RBloomFilterConfiguration.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/merchant-admin/src/main/java/com/example/coupon/merchant/admin/service/impl/CouponTemplateServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/merchant-admin/src/main/java/com/example/coupon/merchant/admin/service/impl/CouponTemplateServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/merchant-admin/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/merchant-admin/src/main/resources/application.yml" afterDir="false" />
+    <list default="true" id="930962b7-3e5e-436c-8225-e575408c149b" name="Changes" comment="修复Merchant-Admin模块Bug:（1）当商家终止优惠券模板后同步修改缓存中的优惠券状态为已停止。（2）当商家增加优惠券发行量后同步修改缓存中的优惠券库存。">
+      <change beforePath="$PROJECT_DIR$/merchant-admin/src/main/java/com/example/coupon/merchant/admin/mq/consumer/CouponTemplateDelayExecuteStatusConsumer.java" beforeDir="false" afterPath="$PROJECT_DIR$/merchant-admin/src/main/java/com/example/coupon/merchant/admin/mq/consumer/CouponTemplateDelayExecuteStatusConsumer.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,6 +44,8 @@
     <setting file="file://$PROJECT_DIR$/framework/src/main/java/com/example/coupon/framework/config/RedisDistributedProperties.java" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/framework/src/main/java/com/example/coupon/framework/idempotent/NoDuplicateSubmitAspect.java" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/merchant-admin/pom.xml" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/merchant-admin/src/main/java/com/example/coupon/merchant/admin/mq/consumer/CouponTemplateDelayExecuteStatusConsumer.java" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/merchant-admin/src/main/java/com/example/coupon/merchant/admin/service/impl/CouponTaskServiceImpl.java" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/merchant-admin/src/main/java/com/example/coupon/merchant/admin/service/impl/CouponTemplateServiceImpl.java" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/merchant-admin/src/main/resources/application.yml" root0="SKIP_INSPECTION" />
   </component>
@@ -166,7 +159,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1747969876694</updated>
-      <workItem from="1747969877744" duration="19137000" />
+      <workItem from="1747969877744" duration="22036000" />
     </task>
     <task id="LOCAL-00001" summary="新增engine模块：增加查询优惠券模板接口，并通过缓存预热、设置缓存过期时间、双重判定锁来解决缓存击穿问题。通过缓存空置、布隆过滤器来解决缓存穿透问题。">
       <option name="closed" value="true" />
@@ -176,7 +169,23 @@
       <option name="project" value="LOCAL" />
       <updated>1747986640770</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="修复Bug:修改Redis中key的组建形式">
+      <option name="closed" value="true" />
+      <created>1747991413916</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1747991413916</updated>
+    </task>
+    <task id="LOCAL-00003" summary="修复Merchant-Admin模块Bug:（1）当商家终止优惠券模板后同步修改缓存中的优惠券状态为已停止。（2）当商家增加优惠券发行量后同步修改缓存中的优惠券库存。">
+      <option name="closed" value="true" />
+      <created>1747995244572</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1747995244572</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -184,6 +193,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="新增engine模块：增加查询优惠券模板接口，并通过缓存预热、设置缓存过期时间、双重判定锁来解决缓存击穿问题。通过缓存空置、布隆过滤器来解决缓存穿透问题。" />
-    <option name="LAST_COMMIT_MESSAGE" value="新增engine模块：增加查询优惠券模板接口，并通过缓存预热、设置缓存过期时间、双重判定锁来解决缓存击穿问题。通过缓存空置、布隆过滤器来解决缓存穿透问题。" />
+    <MESSAGE value="修复Bug:修改Redis中key的组建形式" />
+    <MESSAGE value="修复Merchant-Admin模块Bug:（1）当商家终止优惠券模板后同步修改缓存中的优惠券状态为已停止。（2）当商家增加优惠券发行量后同步修改缓存中的优惠券库存。" />
+    <option name="LAST_COMMIT_MESSAGE" value="修复Merchant-Admin模块Bug:（1）当商家终止优惠券模板后同步修改缓存中的优惠券状态为已停止。（2）当商家增加优惠券发行量后同步修改缓存中的优惠券库存。" />
   </component>
 </project>

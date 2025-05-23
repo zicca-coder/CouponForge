@@ -43,5 +43,6 @@ public class CouponTemplateDelayExecuteStatusConsumer implements RocketMQListene
         CouponTemplateDO couponTemplateDO = CouponTemplateDO.builder().status(CouponTemplateStatusEnum.ENDED.getStatus())
                 .build();
         couponTemplateService.update(couponTemplateDO, updateWrapper);
+        // todo: 同步修改缓存状态
     }
 }
