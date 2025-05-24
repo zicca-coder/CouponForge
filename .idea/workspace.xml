@@ -4,8 +4,43 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="930962b7-3e5e-436c-8225-e575408c149b" name="Changes" comment="修复Merchant-Admin模块Bug:（1）当商家终止优惠券模板后同步修改缓存中的优惠券状态为已停止。（2）当商家增加优惠券发行量后同步修改缓存中的优惠券库存。">
+    <list default="true" id="930962b7-3e5e-436c-8225-e575408c149b" name="Changes" comment="新增distribution模块：搭建模块基础框架">
+      <change afterPath="$PROJECT_DIR$/distribution/src/main/java/com/example/coupon/distribution/common/constant/DistributionRedisConstant.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/distribution/src/main/java/com/example/coupon/distribution/common/constant/DistributionRocketMQConstant.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/distribution/src/main/java/com/example/coupon/distribution/common/constant/EngineRedisConstant.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/distribution/src/main/java/com/example/coupon/distribution/common/enums/CouponSourceEnum.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/distribution/src/main/java/com/example/coupon/distribution/common/enums/CouponStatusEnum.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/distribution/src/main/java/com/example/coupon/distribution/common/enums/CouponTaskStatusEnum.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/distribution/src/main/java/com/example/coupon/distribution/common/enums/CouponTemplateStatusEnum.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/distribution/src/main/java/com/example/coupon/distribution/mq/base/BaseSendExtendDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/distribution/src/main/java/com/example/coupon/distribution/mq/base/MessageWrapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/distribution/src/main/java/com/example/coupon/distribution/mq/consumer/CouponExecuteDistributionConsumer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/distribution/src/main/java/com/example/coupon/distribution/mq/consumer/CouponTaskExecuteConsumer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/distribution/src/main/java/com/example/coupon/distribution/mq/event/CouponTaskExecuteEvent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/distribution/src/main/java/com/example/coupon/distribution/mq/event/CouponTemplateDistributionEvent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/distribution/src/main/java/com/example/coupon/distribution/mq/producer/AbstractCommonSendProduceTemplate.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/distribution/src/main/java/com/example/coupon/distribution/mq/producer/CouponExecuteDistributionProducer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/distribution/src/main/java/com/example/coupon/distribution/toolkit/StockDecrementReturnCombinedUtil.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/distribution/src/main/resources/lua/batch_user_coupon_list.lua" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/distribution/src/main/resources/lua/stock_decrement_and_batch_save_user_record.lua" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/distribution/src/main/resources/mapper/CouponTemplateMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/distribution/src/main/java/com/example/coupon/distribution/dao/mapper/CouponTemplateMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/distribution/src/main/java/com/example/coupon/distribution/dao/mapper/CouponTemplateMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/distribution/src/main/java/com/example/coupon/distribution/dao/mapper/UserCouponMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/distribution/src/main/java/com/example/coupon/distribution/dao/mapper/UserCouponMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/distribution/src/main/java/com/example/coupon/distribution/service/basics/DistributionStrategyChoose.java" beforeDir="false" afterPath="$PROJECT_DIR$/distribution/src/main/java/com/example/coupon/distribution/service/basics/DistributionStrategyChoose.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/distribution/src/main/java/com/example/coupon/distribution/service/handler/excel/CouponTaskExcelObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/distribution/src/main/java/com/example/coupon/distribution/service/handler/excel/CouponTaskExcelObject.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/distribution/src/main/java/com/example/coupon/distribution/service/handler/excel/ReadExcelDistributionListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/distribution/src/main/java/com/example/coupon/distribution/service/handler/excel/ReadExcelDistributionListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/common/constant/EngineRedisConstant.java" beforeDir="false" afterPath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/common/constant/EngineRedisConstant.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/merchant-admin/src/main/java/com/example/coupon/merchant/admin/common/constant/MerchantAdminRocketMQConstant.java" beforeDir="false" afterPath="$PROJECT_DIR$/merchant-admin/src/main/java/com/example/coupon/merchant/admin/common/constant/MerchantAdminRocketMQConstant.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/merchant-admin/src/main/java/com/example/coupon/merchant/admin/mq/consumer/CouponTaskDelayExecuteStatusConsumer.java" beforeDir="false" afterPath="$PROJECT_DIR$/merchant-admin/src/main/java/com/example/coupon/merchant/admin/mq/consumer/CouponTaskDelayExecuteStatusConsumer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/merchant-admin/src/main/java/com/example/coupon/merchant/admin/mq/consumer/CouponTemplateDelayExecuteStatusConsumer.java" beforeDir="false" afterPath="$PROJECT_DIR$/merchant-admin/src/main/java/com/example/coupon/merchant/admin/mq/consumer/CouponTemplateDelayExecuteStatusConsumer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/merchant-admin/src/main/java/com/example/coupon/merchant/admin/mq/producer/AbstractCommonSendProduceTemplate.java" beforeDir="false" afterPath="$PROJECT_DIR$/merchant-admin/src/main/java/com/example/coupon/merchant/admin/mq/producer/AbstractCommonSendProduceTemplate.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/merchant-admin/src/main/java/com/example/coupon/merchant/admin/mq/producer/CouponTaskActualExecuteProducer.java" beforeDir="false" afterPath="$PROJECT_DIR$/merchant-admin/src/main/java/com/example/coupon/merchant/admin/mq/producer/CouponTaskActualExecuteProducer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/merchant-admin/src/main/java/com/example/coupon/merchant/admin/mq/producer/CouponTemplateDelayExecuteStatusProducer.java" beforeDir="false" afterPath="$PROJECT_DIR$/merchant-admin/src/main/java/com/example/coupon/merchant/admin/mq/producer/CouponTemplateDelayExecuteStatusProducer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/merchant-admin/src/main/java/com/example/coupon/merchant/admin/service/basics/chain/MerchantAdminChainContext.java" beforeDir="false" afterPath="$PROJECT_DIR$/merchant-admin/src/main/java/com/example/coupon/merchant/admin/service/basics/chain/MerchantAdminChainContext.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/merchant-admin/src/test/java/com/example/coupon/merchant/admin/task/ExcelGenerateTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/merchant-admin/src/test/java/com/example/coupon/merchant/admin/task/ExcelGenerateTests.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -15,8 +50,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Enum" />
         <option value="Interface" />
+        <option value="Enum" />
         <option value="Class" />
       </list>
     </option>
@@ -24,19 +59,30 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "zicca-coder"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;zicca-coder&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/zicca-coder/CouponForge",
-    "accountId": "66da9767-d495-4246-8886-636d6c7c8635"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/zicca-coder/CouponForge&quot;,
+    &quot;accountId&quot;: &quot;66da9767-d495-4246-8886-636d6c7c8635&quot;
   }
-}]]></component>
+}</component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/distribution/pom.xml" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/distribution/src/main/java/com/example/coupon/distribution/common/enums/SendMessageMarkCovertEnum.java" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/distribution/src/main/java/com/example/coupon/distribution/mq/base/MessageWrapper.java" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/distribution/src/main/java/com/example/coupon/distribution/mq/consumer/CouponExecuteDistributionConsumer.java" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/distribution/src/main/java/com/example/coupon/distribution/mq/consumer/CouponTaskExecuteConsumer.java" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/distribution/src/main/java/com/example/coupon/distribution/mq/producer/AbstractCommonSendProduceTemplate.java" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/distribution/src/main/java/com/example/coupon/distribution/mq/producer/CouponExecuteDistributionProducer.java" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/distribution/src/main/java/com/example/coupon/distribution/service/basics/DistributionStrategyChoose.java" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/distribution/src/main/java/com/example/coupon/distribution/service/handler/excel/ReadExcelDistributionListener.java" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/distribution/src/main/resources/lua/batch_user_coupon_list.lua" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/distribution/src/main/resources/lua/stock_decrement_and_batch_save_user_record.lua" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/engine/pom.xml" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/common/enums/CouponTemplateStatusEnum.java" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/dto/req/CouponCreatePaymentReqDTO.java" root0="SKIP_INSPECTION" />
@@ -45,6 +91,8 @@
     <setting file="file://$PROJECT_DIR$/framework/src/main/java/com/example/coupon/framework/idempotent/NoDuplicateSubmitAspect.java" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/merchant-admin/pom.xml" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/merchant-admin/src/main/java/com/example/coupon/merchant/admin/mq/consumer/CouponTemplateDelayExecuteStatusConsumer.java" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/merchant-admin/src/main/java/com/example/coupon/merchant/admin/mq/producer/CouponTaskActualExecuteProducer.java" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/merchant-admin/src/main/java/com/example/coupon/merchant/admin/service/basics/chain/MerchantAdminChainContext.java" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/merchant-admin/src/main/java/com/example/coupon/merchant/admin/service/impl/CouponTaskServiceImpl.java" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/merchant-admin/src/main/java/com/example/coupon/merchant/admin/service/impl/CouponTemplateServiceImpl.java" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/merchant-admin/src/main/resources/application.yml" root0="SKIP_INSPECTION" />
@@ -62,9 +110,9 @@
   <component name="MavenRunner">
     <option name="jreName" value="17" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 0
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 0
+}</component>
   <component name="ProjectId" id="2xTlJzyWIVP57ZdeqT5Hw3Vj4D6" />
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
@@ -75,11 +123,13 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "JUnit.ExcelGenerateTests.testExcelGenerate.executor": "Run",
     "RequestMappingsPanelOrder0": "0",
     "RequestMappingsPanelOrder1": "1",
     "RequestMappingsPanelWidth0": "75",
     "RequestMappingsPanelWidth1": "75",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "Spring Boot.DistributionApplication.executor": "Run",
     "Spring Boot.EngineApplication.executor": "Run",
     "Spring Boot.MerchantAdminApplication.executor": "Run",
     "git-widget-placeholder": "master",
@@ -94,7 +144,8 @@
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.0",
     "project.structure.side.proportion": "0.0",
-    "settings.editor.selected.configurable": "reference.projectsettings.compiler.javacompiler",
+    "run.configurations.included.in.services": "true",
+    "settings.editor.selected.configurable": "reference.settings.project.statistic.project.settings",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -102,20 +153,52 @@
     <option name="notificationShown" value="true" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\workspace\CouponForge\engine\src\main\resources" />
+    </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="com.example.coupon.engine.config" />
     </key>
   </component>
-  <component name="RunManager" selected="Spring Boot.EngineApplication">
-    <configuration default="true" type="JetRunConfigurationType">
-      <module name="coupon-all" />
+  <component name="RunDashboard">
+    <option name="configurationTypes">
+      <set>
+        <option value="KtorApplicationConfigurationType" />
+        <option value="MicronautRunConfigurationType" />
+        <option value="QuarkusRunConfigurationType" />
+        <option value="SpringBootApplicationConfigurationType" />
+      </set>
+    </option>
+  </component>
+  <component name="RunManager" selected="JUnit.ExcelGenerateTests.testExcelGenerate">
+    <configuration name="ExcelGenerateTests.testExcelGenerate" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="coupon-merchant-admin" />
+      <shortenClasspath name="ARGS_FILE" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.example.coupon.merchant.admin.task.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.example.coupon.merchant.admin.task" />
+      <option name="MAIN_CLASS_NAME" value="com.example.coupon.merchant.admin.task.ExcelGenerateTests" />
+      <option name="METHOD_NAME" value="testExcelGenerate" />
+      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
-      <module name="coupon-all" />
-      <option name="filePath" />
+    <configuration default="true" type="JUnit" factoryName="JUnit">
+      <shortenClasspath name="ARGS_FILE" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="DistributionApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="coupon-distribution" />
+      <option name="SHORTEN_COMMAND_LINE" value="ARGS_FILE" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.coupon.distribution.DistributionApplication" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -142,6 +225,11 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.ExcelGenerateTests.testExcelGenerate" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -159,7 +247,10 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1747969876694</updated>
-      <workItem from="1747969877744" duration="22036000" />
+      <workItem from="1747969877744" duration="27069000" />
+      <workItem from="1748046713414" duration="504000" />
+      <workItem from="1748047226518" duration="10411000" />
+      <workItem from="1748057725426" duration="15828000" />
     </task>
     <task id="LOCAL-00001" summary="新增engine模块：增加查询优惠券模板接口，并通过缓存预热、设置缓存过期时间、双重判定锁来解决缓存击穿问题。通过缓存空置、布隆过滤器来解决缓存穿透问题。">
       <option name="closed" value="true" />
@@ -185,7 +276,15 @@
       <option name="project" value="LOCAL" />
       <updated>1747995244572</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="新增distribution模块：搭建模块基础框架">
+      <option name="closed" value="true" />
+      <created>1748000986161</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1748000986161</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -195,6 +294,11 @@
     <MESSAGE value="新增engine模块：增加查询优惠券模板接口，并通过缓存预热、设置缓存过期时间、双重判定锁来解决缓存击穿问题。通过缓存空置、布隆过滤器来解决缓存穿透问题。" />
     <MESSAGE value="修复Bug:修改Redis中key的组建形式" />
     <MESSAGE value="修复Merchant-Admin模块Bug:（1）当商家终止优惠券模板后同步修改缓存中的优惠券状态为已停止。（2）当商家增加优惠券发行量后同步修改缓存中的优惠券库存。" />
-    <option name="LAST_COMMIT_MESSAGE" value="修复Merchant-Admin模块Bug:（1）当商家终止优惠券模板后同步修改缓存中的优惠券状态为已停止。（2）当商家增加优惠券发行量后同步修改缓存中的优惠券库存。" />
+    <MESSAGE value="新增distribution模块：搭建模块基础框架" />
+    <option name="LAST_COMMIT_MESSAGE" value="新增distribution模块：搭建模块基础框架" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>

@@ -18,6 +18,7 @@ import java.util.UUID;
 
 /**
  * 优惠券模板关闭定时执行生产者
+ * 消息消费者：{@link com.example.coupon.merchant.admin.mq.consumer.CouponTemplateDelayExecuteStatusConsumer}
  */
 @Component
 public class CouponTemplateDelayExecuteStatusProducer extends AbstractCommonSendProduceTemplate<CouponTemplateDelayEvent>{

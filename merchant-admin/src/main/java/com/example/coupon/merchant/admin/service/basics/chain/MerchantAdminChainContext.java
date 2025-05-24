@@ -23,7 +23,7 @@ public final class MerchantAdminChainContext<T> implements ApplicationContextAwa
     private ApplicationContext applicationContext;
 
     /**
-     * 商家后管模块责任链组件容器
+     * 商家后管模块责任链组件容器 -> 这里体现了享元模式，通过共享同一个实例，减少内存消耗
      * <p>
      *     Key: 责任链标识 {@link MerchantAdminAbstractChainHandler#mark()}
      *     Val: 责任链的各个组件的集合 {@link List<MerchantAdminAbstractChainHandler>}

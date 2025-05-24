@@ -18,6 +18,7 @@ import java.util.UUID;
 
 /**
  * 优惠券推送任务执行生产者 -> 负责扫描优惠券 Excel 并将里面的记录进行实际推送
+ * 消息消费者:{@link com.example.coupon.distribution.mq.consumer.CouponTaskExecuteConsumer}
  */
 @Slf4j
 @Component

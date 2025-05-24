@@ -23,7 +23,7 @@ public class DistributionStrategyChoose implements ApplicationContextAware, Comm
     private ApplicationContext applicationContext;
 
     /**
-     * 执行策略集合
+     * 执行策略集合 -> 这里体现了享元模式，避免创建多余的策略对象
      */
     private final Map<String, DistributionExecuteStrategy> abstractExecuteStrategyMap = new HashMap<>();
 

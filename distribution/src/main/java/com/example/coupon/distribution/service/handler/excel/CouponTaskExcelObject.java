@@ -15,5 +15,5 @@ public class CouponTaskExcelObject {
     private String phone;
 
     @ExcelProperty("邮箱")
-    private String email;
+    private String mail;
 }

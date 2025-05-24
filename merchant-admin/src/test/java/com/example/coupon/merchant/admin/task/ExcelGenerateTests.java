@@ -23,7 +23,7 @@ public class ExcelGenerateTests {
     /**
      * 写入优惠券推送示例 Excel 的数据
      */
-    private final int writeNum = 1000000;
+    private final int writeNum = 5131;
     private final Faker faker = new Faker(Locale.CHINA);
     private final String excelPath = "E:/excel";
 

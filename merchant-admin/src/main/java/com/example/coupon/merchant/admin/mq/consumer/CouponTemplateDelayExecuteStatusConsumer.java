@@ -18,6 +18,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * 优惠券模板关闭定时任务消费者
+ * 消息生产者：{@link com.example.coupon.merchant.admin.mq.producer.CouponTemplateDelayExecuteStatusProducer}
  */
 @Component
 @RequiredArgsConstructor
