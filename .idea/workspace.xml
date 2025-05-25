@@ -4,11 +4,21 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="930962b7-3e5e-436c-8225-e575408c149b" name="Changes" comment="完善用户领取（秒杀）优惠券功能：&#10;引入消息队列进行异步解耦，主流程仅同步操作 Redis, 后续的数据库耗时操作交由消息队列消费者来执行，从而提升整体性能。">
-      <change afterPath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/mq/consumer/CanalBinlogSyncUserCouponConsumer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/mq/event/CanalBinlogEvent.java" afterDir="false" />
+    <list default="true" id="930962b7-3e5e-436c-8225-e575408c149b" name="Changes" comment="重构用户领取（秒杀）优惠券功能（非消息队列版本）：数据库持久化完成后，后续的缓存过程不在主流程中执行，同 Canal 监听 MySQL，配合 RocketMQ 来异步执行后续的缓存工作。&#10;Canal 监听到 t_user_coupon 中新增记录（利用binlog），向 RocketMQ 发送一条变更消息，CanalBinlogSyncUserCouponConsumer 消费该消息，执行后续缓存工作。">
+      <change afterPath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/controller/CouponTemplateRemindController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/mq/consumer/CouponTemplateRemindDelayConsumer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/mq/event/CouponTemplateRemindDelayEvent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/mq/producer/CouponTemplateRemindDelayProducer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/service/CouponTemplateRemindService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/service/handler/remind/CouponTemplateRemindExecutor.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/service/handler/remind/RemindCouponTemplate.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/service/handler/remind/dto/CouponTemplateRemindDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/service/handler/remind/impl/SendAppMessageRemindCouponTemplate.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/service/handler/remind/impl/SendEmailRemindCouponTemplate.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/service/impl/CouponTemplateServiceRemindImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/toolkit/CouponTemplateRemindUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/common/constant/EngineRedisConstant.java" beforeDir="false" afterPath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/common/constant/EngineRedisConstant.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/common/constant/EngineRocketMQConstant.java" beforeDir="false" afterPath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/common/constant/EngineRocketMQConstant.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/service/impl/UserCouponServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/service/impl/UserCouponServiceImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -61,7 +71,10 @@
     <setting file="file://$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/mq/base/MessageWrapper.java" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/mq/consumer/CanalBinlogSyncUserCouponConsumer.java" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/mq/producer/AbstractCommonSendProduceTemplate.java" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/mq/producer/CouponTemplateRemindDelayProducer.java" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/service/UserCouponService.java" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/service/handler/remind/CouponTemplateRemindExecutor.java" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/service/handler/remind/dto/CouponTemplateRemindDTO.java" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/service/impl/CouponTemplateServiceImpl.java" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/service/impl/UserCouponServiceImpl.java" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/engine/src/main/resources/lua/stock_decrement_and_save_user_receive.lua" root0="SKIP_INSPECTION" />
@@ -235,7 +248,7 @@
       <workItem from="1748134467187" duration="80000" />
       <workItem from="1748141540231" duration="1891000" />
       <workItem from="1748155212408" duration="2857000" />
-      <workItem from="1748158200982" duration="4726000" />
+      <workItem from="1748158200982" duration="15364000" />
     </task>
     <task id="LOCAL-00001" summary="新增engine模块：增加查询优惠券模板接口，并通过缓存预热、设置缓存过期时间、双重判定锁来解决缓存击穿问题。通过缓存空置、布隆过滤器来解决缓存穿透问题。">
       <option name="closed" value="true" />
@@ -293,7 +306,15 @@
       <option name="project" value="LOCAL" />
       <updated>1748162866381</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="重构用户领取（秒杀）优惠券功能（非消息队列版本）：数据库持久化完成后，后续的缓存过程不在主流程中执行，同 Canal 监听 MySQL，配合 RocketMQ 来异步执行后续的缓存工作。&#10;Canal 监听到 t_user_coupon 中新增记录（利用binlog），向 RocketMQ 发送一条变更消息，CanalBinlogSyncUserCouponConsumer 消费该消息，执行后续缓存工作。">
+      <option name="closed" value="true" />
+      <created>1748164574605</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1748164574605</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -307,7 +328,8 @@
     <MESSAGE value="开发用户优惠券分发功能，采用消息队列将优惠券异步发送给用户" />
     <MESSAGE value="开发用户领取（秒杀）优惠券功能：&#10;1. 查询优惠券是否存在、过期（先查缓存、再查数据库）&#10;2. 执行 Lua 脚本，扣减缓存中的库存，避免大量秒杀请求直达数据库对数据库造成压力&#10;3. 数据库执行扣减库存，判断是否成功。防止出现 Redis 扣减库存后，突然宕机，且未持久化成功，但数据库已经扣减库存。当 Redis 恢复后，缓存中的库存不为0，但是数据库中库存已经为0了。&#10;4. 扣减库存成功后，新增一条记录到 t_usr_coupon 表。&#10;5. 新增一条记录到用户已领取优惠券集合的缓存中。&#10;6. 为了防止新增缓存过程中 Redis 宕机，这里采取写后查的策略，新增到缓存中后，查询是否新增成功，若失败则重写加入。&#10;7. 数据库和缓存都更新记录后，发送一条延时消息，等优惠券券有效过了，将该优惠券从用户领取优惠券集合缓存中删除，同时修改 t_user_coupon 表中该优惠券记录为过期。" />
     <MESSAGE value="完善用户领取（秒杀）优惠券功能：&#10;引入消息队列进行异步解耦，主流程仅同步操作 Redis, 后续的数据库耗时操作交由消息队列消费者来执行，从而提升整体性能。" />
-    <option name="LAST_COMMIT_MESSAGE" value="完善用户领取（秒杀）优惠券功能：&#10;引入消息队列进行异步解耦，主流程仅同步操作 Redis, 后续的数据库耗时操作交由消息队列消费者来执行，从而提升整体性能。" />
+    <MESSAGE value="重构用户领取（秒杀）优惠券功能（非消息队列版本）：数据库持久化完成后，后续的缓存过程不在主流程中执行，同 Canal 监听 MySQL，配合 RocketMQ 来异步执行后续的缓存工作。&#10;Canal 监听到 t_user_coupon 中新增记录（利用binlog），向 RocketMQ 发送一条变更消息，CanalBinlogSyncUserCouponConsumer 消费该消息，执行后续缓存工作。" />
+    <option name="LAST_COMMIT_MESSAGE" value="重构用户领取（秒杀）优惠券功能（非消息队列版本）：数据库持久化完成后，后续的缓存过程不在主流程中执行，同 Canal 监听 MySQL，配合 RocketMQ 来异步执行后续的缓存工作。&#10;Canal 监听到 t_user_coupon 中新增记录（利用binlog），向 RocketMQ 发送一条变更消息，CanalBinlogSyncUserCouponConsumer 消费该消息，执行后续缓存工作。" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

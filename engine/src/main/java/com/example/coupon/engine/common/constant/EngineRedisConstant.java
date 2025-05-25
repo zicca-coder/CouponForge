@@ -43,4 +43,17 @@ public class EngineRedisConstant {
      */
     public static final String USER_COUPON_TEMPLATE_LIMIT_KEY = "coupon:cache:engine:user-template-limit:";
 
+
+    /**
+     * 检查用户是否已提醒 Key
+     */
+    public static final String COUPON_REMIND_CHECK_KEY = "coupon:cache:engine:coupon-remind-check:";
+
+
+    /**
+     * 用户预约提醒信息 Key
+     */
+    public static final String USER_COUPON_TEMPLATE_REMIND_INFORMATION = "coupon:cache:engine:coupon-remind-information:";
+
+
 }
