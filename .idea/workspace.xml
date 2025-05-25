@@ -4,24 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="930962b7-3e5e-436c-8225-e575408c149b" name="Changes" comment="开发用户优惠券分发功能，采用消息队列将优惠券异步发送给用户">
-      <change afterPath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/common/constant/EngineRockerMQConstant.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/controller/UserCouponController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/mq/base/BaseSendExtendDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/mq/base/MessageWrapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/mq/consumer/UserCouponDelayCloseConsumer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/mq/event/UserCouponDelayCloseEvent.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/mq/producer/AbstractCommonSendProduceTemplate.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/mq/producer/UserCouponDelayCloseProducer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/service/UserCouponService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/service/impl/UserCouponServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/toolkit/StockDecrementReturnCombinedUtil.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engine/src/main/resources/lua/stock_decrement_and_save_user_receive.lua" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engine/src/main/resources/mapper/CouponTemplateMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/common/constant/EngineRedisConstant.java" beforeDir="false" afterPath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/common/constant/EngineRedisConstant.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/dao/mapper/CouponTemplateMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/dao/mapper/CouponTemplateMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/engine/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/engine/src/main/resources/application.yml" afterDir="false" />
+    <list default="true" id="930962b7-3e5e-436c-8225-e575408c149b" name="Changes" comment="开发用户领取（秒杀）优惠券功能：&#10;1. 查询优惠券是否存在、过期（先查缓存、再查数据库）&#10;2. 执行 Lua 脚本，扣减缓存中的库存，避免大量秒杀请求直达数据库对数据库造成压力&#10;3. 数据库执行扣减库存，判断是否成功。防止出现 Redis 扣减库存后，突然宕机，且未持久化成功，但数据库已经扣减库存。当 Redis 恢复后，缓存中的库存不为0，但是数据库中库存已经为0了。&#10;4. 扣减库存成功后，新增一条记录到 t_usr_coupon 表。&#10;5. 新增一条记录到用户已领取优惠券集合的缓存中。&#10;6. 为了防止新增缓存过程中 Redis 宕机，这里采取写后查的策略，新增到缓存中后，查询是否新增成功，若失败则重写加入。&#10;7. 数据库和缓存都更新记录后，发送一条延时消息，等优惠券券有效过了，将该优惠券从用户领取优惠券集合缓存中删除，同时修改 t_user_coupon 表中该优惠券记录为过期。">
+      <change afterPath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/mq/consumer/UserCouponRedeemConsumer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/mq/event/UserCouponRedeemEvent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/mq/producer/UserCouponRedeemProducer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/common/constant/EngineRockerMQConstant.java" beforeDir="false" afterPath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/common/constant/EngineRocketMQConstant.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/controller/UserCouponController.java" beforeDir="false" afterPath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/controller/UserCouponController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/mq/consumer/UserCouponDelayCloseConsumer.java" beforeDir="false" afterPath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/mq/consumer/UserCouponDelayCloseConsumer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/mq/producer/UserCouponDelayCloseProducer.java" beforeDir="false" afterPath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/mq/producer/UserCouponDelayCloseProducer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/service/impl/UserCouponServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/service/impl/UserCouponServiceImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -247,7 +238,7 @@
       <workItem from="1748134467187" duration="80000" />
       <workItem from="1748141540231" duration="1891000" />
       <workItem from="1748155212408" duration="2857000" />
-      <workItem from="1748158200982" duration="517000" />
+      <workItem from="1748158200982" duration="3190000" />
     </task>
     <task id="LOCAL-00001" summary="新增engine模块：增加查询优惠券模板接口，并通过缓存预热、设置缓存过期时间、双重判定锁来解决缓存击穿问题。通过缓存空置、布隆过滤器来解决缓存穿透问题。">
       <option name="closed" value="true" />
@@ -289,7 +280,15 @@
       <option name="project" value="LOCAL" />
       <updated>1748089977717</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="开发用户领取（秒杀）优惠券功能：&#10;1. 查询优惠券是否存在、过期（先查缓存、再查数据库）&#10;2. 执行 Lua 脚本，扣减缓存中的库存，避免大量秒杀请求直达数据库对数据库造成压力&#10;3. 数据库执行扣减库存，判断是否成功。防止出现 Redis 扣减库存后，突然宕机，且未持久化成功，但数据库已经扣减库存。当 Redis 恢复后，缓存中的库存不为0，但是数据库中库存已经为0了。&#10;4. 扣减库存成功后，新增一条记录到 t_usr_coupon 表。&#10;5. 新增一条记录到用户已领取优惠券集合的缓存中。&#10;6. 为了防止新增缓存过程中 Redis 宕机，这里采取写后查的策略，新增到缓存中后，查询是否新增成功，若失败则重写加入。&#10;7. 数据库和缓存都更新记录后，发送一条延时消息，等优惠券券有效过了，将该优惠券从用户领取优惠券集合缓存中删除，同时修改 t_user_coupon 表中该优惠券记录为过期。">
+      <option name="closed" value="true" />
+      <created>1748159456594</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1748159456594</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -301,7 +300,8 @@
     <MESSAGE value="修复Merchant-Admin模块Bug:（1）当商家终止优惠券模板后同步修改缓存中的优惠券状态为已停止。（2）当商家增加优惠券发行量后同步修改缓存中的优惠券库存。" />
     <MESSAGE value="新增distribution模块：搭建模块基础框架" />
     <MESSAGE value="开发用户优惠券分发功能，采用消息队列将优惠券异步发送给用户" />
-    <option name="LAST_COMMIT_MESSAGE" value="开发用户优惠券分发功能，采用消息队列将优惠券异步发送给用户" />
+    <MESSAGE value="开发用户领取（秒杀）优惠券功能：&#10;1. 查询优惠券是否存在、过期（先查缓存、再查数据库）&#10;2. 执行 Lua 脚本，扣减缓存中的库存，避免大量秒杀请求直达数据库对数据库造成压力&#10;3. 数据库执行扣减库存，判断是否成功。防止出现 Redis 扣减库存后，突然宕机，且未持久化成功，但数据库已经扣减库存。当 Redis 恢复后，缓存中的库存不为0，但是数据库中库存已经为0了。&#10;4. 扣减库存成功后，新增一条记录到 t_usr_coupon 表。&#10;5. 新增一条记录到用户已领取优惠券集合的缓存中。&#10;6. 为了防止新增缓存过程中 Redis 宕机，这里采取写后查的策略，新增到缓存中后，查询是否新增成功，若失败则重写加入。&#10;7. 数据库和缓存都更新记录后，发送一条延时消息，等优惠券券有效过了，将该优惠券从用户领取优惠券集合缓存中删除，同时修改 t_user_coupon 表中该优惠券记录为过期。" />
+    <option name="LAST_COMMIT_MESSAGE" value="开发用户领取（秒杀）优惠券功能：&#10;1. 查询优惠券是否存在、过期（先查缓存、再查数据库）&#10;2. 执行 Lua 脚本，扣减缓存中的库存，避免大量秒杀请求直达数据库对数据库造成压力&#10;3. 数据库执行扣减库存，判断是否成功。防止出现 Redis 扣减库存后，突然宕机，且未持久化成功，但数据库已经扣减库存。当 Redis 恢复后，缓存中的库存不为0，但是数据库中库存已经为0了。&#10;4. 扣减库存成功后，新增一条记录到 t_usr_coupon 表。&#10;5. 新增一条记录到用户已领取优惠券集合的缓存中。&#10;6. 为了防止新增缓存过程中 Redis 宕机，这里采取写后查的策略，新增到缓存中后，查询是否新增成功，若失败则重写加入。&#10;7. 数据库和缓存都更新记录后，发送一条延时消息，等优惠券券有效过了，将该优惠券从用户领取优惠券集合缓存中删除，同时修改 t_user_coupon 表中该优惠券记录为过期。" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

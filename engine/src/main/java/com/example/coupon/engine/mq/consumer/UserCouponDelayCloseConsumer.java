@@ -5,7 +5,7 @@ import com.alibaba.fastjson2.JSON;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.example.coupon.engine.common.constant.EngineRedisConstant;
-import com.example.coupon.engine.common.constant.EngineRockerMQConstant;
+import com.example.coupon.engine.common.constant.EngineRocketMQConstant;
 import com.example.coupon.engine.common.context.UserContext;
 import com.example.coupon.engine.common.enums.UserCouponStatusEnum;
 import com.example.coupon.engine.dao.entity.UserCouponDO;
@@ -26,8 +26,8 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 @RocketMQMessageListener(
-        topic = EngineRockerMQConstant.USER_COUPON_DELAY_CLOSE_TOPIC_KEY,
-        consumerGroup = EngineRockerMQConstant.USER_COUPON_DELAY_CLOSE_CG_KEY
+        topic = EngineRocketMQConstant.USER_COUPON_DELAY_CLOSE_TOPIC_KEY,
+        consumerGroup = EngineRocketMQConstant.USER_COUPON_DELAY_CLOSE_CG_KEY
 )
 @Slf4j(topic = "UserCouponDelayCloseConsumer")
 public class UserCouponDelayCloseConsumer implements RocketMQListener<MessageWrapper<UserCouponDelayCloseEvent>> {

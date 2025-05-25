@@ -27,5 +27,12 @@ public class UserCouponController {
         return Results.success();
     }
 
+    @Operation(summary = "兑换优惠券模板之消息队列", description = "存在较高流量场景，可类比“秒杀”业务")
+    @PostMapping("/redeem-mq")
+    public Result<Void> redeemUserCouponByMQ(@RequestBody CouponTemplateRedeemReqDTO requestParam) {
+        userCouponService.redeemUserCouponByMQ(requestParam);
+        return Results.success();
+    }
+
 
 }
