@@ -64,7 +64,7 @@ public class UserCouponServiceImpl implements UserCouponService {
     private final RedissonClient redissonClient;
     private final TransactionTemplate transactionTemplate;
 
-    @Value("${coupon.user-coupon-list.save-cache.type:}")
+    @Value("${coupon.user-coupon-list.save-cache.type}")
     private String userCouponListSaveCacheType;
 
     private final static String STOCK_DECREMENT_AND_SAVE_USER_RECEIVE_LUA_PATH = "lua/stock_decrement_and_save_user_receive.lua";

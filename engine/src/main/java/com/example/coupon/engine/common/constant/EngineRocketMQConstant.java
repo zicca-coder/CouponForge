@@ -22,4 +22,16 @@ public class EngineRocketMQConstant {
      */
     public static final String COUPON_TEMPLATE_REDEEM_CG_KEY = "one-coupon_engine-service_coupon-redeem_cg-859608205";
 
+
+    /**
+     * Canal 监听用户优惠券表 Binlog Topic Key
+     */
+    public static final String USER_COUPON_BINLOG_SYNC_TOPIC_KEY = "one-coupon_canal_engine-service_common-sync_topic-859608205";
+
+    /**
+     * Canal 监听用户优惠券表 Binlog 消费者组 Key
+     */
+    public static final String USER_COUPON_BINLOG_SYNC_CG_KEY = "one-coupon_canal_engine-service_common-sync_cg-859608205";
+
+
 }
