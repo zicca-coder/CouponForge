@@ -45,3 +45,8 @@ server:
   port: 10020
   servlet:
     context-path:
+
+coupon:
+  user-coupon-list:
+    save-cache:
+      type: direct # direct 在流程里直接操作，binlog 通过解析数据库日志后操作
