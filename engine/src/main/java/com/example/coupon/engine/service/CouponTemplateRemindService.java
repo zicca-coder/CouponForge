@@ -36,6 +36,15 @@ public interface CouponTemplateRemindService extends IService<CouponTemplateRemi
      */
     void cancelCouponRemind(CouponTemplateRemindCancelReqDTO requestParam);
 
+
+    /**
+     * 取消抢券预约提醒
+     *
+     * @param requestParam 请求参数
+     */
+    void cancelCouponRemindV2(CouponTemplateRemindCancelReqDTO requestParam);
+
+
     /**
      * 检查是否取消抢券预约提醒
      *
