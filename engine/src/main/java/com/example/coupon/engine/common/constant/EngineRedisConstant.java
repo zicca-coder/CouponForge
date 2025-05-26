@@ -56,4 +56,11 @@ public class EngineRedisConstant {
     public static final String USER_COUPON_TEMPLATE_REMIND_INFORMATION = "coupon:cache:engine:coupon-remind-information:";
 
 
+
+    /**
+     * 优惠券结算单分布式锁 Key
+     */
+    public static final String LOCK_COUPON_SETTLEMENT_KEY = "coupon:lock:engine:coupon-settlement:";
+
+
 }
