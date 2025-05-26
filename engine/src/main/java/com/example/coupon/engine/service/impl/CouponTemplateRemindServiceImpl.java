@@ -1,12 +1,15 @@
 package com.example.coupon.engine.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.date.DateUtil;
+import com.alibaba.fastjson2.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.coupon.engine.common.constant.EngineRedisConstant;
 import com.example.coupon.engine.common.context.UserContext;
+import com.example.coupon.engine.dao.entity.CouponTemplateDO;
 import com.example.coupon.engine.dao.entity.CouponTemplateRemindDO;
 import com.example.coupon.engine.dao.mapper.CouponTemplateRemindMapper;
 import com.example.coupon.engine.dto.req.CouponTemplateQueryReqDTO;
@@ -26,10 +29,15 @@ import lombok.RequiredArgsConstructor;
 import org.redisson.api.RBloomFilter;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
+
+import static com.example.coupon.engine.common.constant.EngineRedisConstant.USER_COUPON_TEMPLATE_REMIND_INFORMATION;
 
 /**
  * 优惠券预约提醒业务逻辑实现层
@@ -50,6 +58,7 @@ public class CouponTemplateRemindServiceImpl extends ServiceImpl<CouponTemplateR
      * @param requestParam 请求参数
      */
     @Override
+    @Transactional
     public void createCouponRemind(CouponTemplateRemindCreateReqDTO requestParam) {
         // 验证优惠券是否存在，避免缓存穿透问题并获取优惠券开抢时间
         CouponTemplateQueryRespDTO couponTemplate = couponTemplateService
@@ -100,14 +109,48 @@ public class CouponTemplateRemindServiceImpl extends ServiceImpl<CouponTemplateR
         couponTemplateRemindDelayProducer.sendMessage(couponRemindDelayEvent);
 
         // 删除用户预约提醒的缓存信息，通过更新数据库删除缓存策略保障数据库和缓存一致性
-        stringRedisTemplate.delete(EngineRedisConstant.USER_COUPON_TEMPLATE_REMIND_INFORMATION + UserContext.getUserId());
+        // todo: 其他缓存一致性策略
+        stringRedisTemplate.delete(USER_COUPON_TEMPLATE_REMIND_INFORMATION + UserContext.getUserId());
 
 
     }
 
     @Override
     public List<CouponTemplateRemindQueryRespDTO> listCouponRemind(CouponTemplateRemindQueryReqDTO requestParam) {
-        return List.of();
+        String value = stringRedisTemplate.opsForValue().get(USER_COUPON_TEMPLATE_REMIND_INFORMATION + UserContext.getUserId());
+        if (value != null) {
+            return JSON.parseArray(value, CouponTemplateRemindQueryRespDTO.class);
+        }
+
+        // 查出用户预约的所有优惠券的信息
+        List<CouponTemplateRemindDO> couponTemplateRemindDOlist = lambdaQuery().eq(CouponTemplateRemindDO::getUserId, requestParam.getUserId()).list();
+        if (CollUtil.isEmpty(couponTemplateRemindDOlist))
+            return new ArrayList<>();
+
+        // 根据优惠券 ID 查询优惠券信息
+        List<Long> couponIds = couponTemplateRemindDOlist.stream()
+                .map(CouponTemplateRemindDO::getCouponTemplateId)
+                .toList();
+        List<Long> shopNumbers = couponTemplateRemindDOlist.stream()
+                .map(CouponTemplateRemindDO::getShopNumber)
+                .toList();
+        List<CouponTemplateDO> couponTemplateDOList = couponTemplateService.listCouponTemplateByIds(couponIds, shopNumbers);
+        List<CouponTemplateRemindQueryRespDTO> actualResult = BeanUtil.copyToList(couponTemplateDOList, CouponTemplateRemindQueryRespDTO.class);
+
+        // 填充响应结果的其它信息
+        actualResult.forEach(each -> {
+            // 找到当前优惠券对应的预约提醒信息
+            couponTemplateRemindDOlist.stream()
+                    .filter(i -> i.getCouponTemplateId().equals(each.getId()))
+                    .findFirst()
+                    .ifPresent(i -> {
+                        // 解析并填充预约提醒信息
+                        CouponTemplateRemindUtil.fillRemindInformation(each, i.getInformation());
+                    });
+        });
+
+        stringRedisTemplate.opsForValue().set(EngineRedisConstant.USER_COUPON_TEMPLATE_REMIND_INFORMATION +  requestParam.getUserId(), JSON.toJSONString(actualResult), 1, TimeUnit.MINUTES);
+        return actualResult;
     }
 
     @Override
@@ -152,11 +195,13 @@ public class CouponTemplateRemindServiceImpl extends ServiceImpl<CouponTemplateR
         /**
          * 由于 RocketMQ 消费者在执行预约提醒时都需要查看该提醒是否已被取消，所以这里需要将用户取消提醒的记录写入布隆过滤器，减轻数据库压力
          * hash(couponTemplateId + userId + remindType + remindTime)
+         * todo: 这里似乎存在漏洞 -> 假如用户取消了预约，该条信息加入了布隆过滤器。用户又重新预约了该提醒，此时该信息仍在布隆过滤器中。
+         * todo: 是否需要改成用缓存处理呢？
          */
         cancelRemindBloomFilter.add(String.valueOf(Objects.hash(requestParam.getCouponTemplateId(), UserContext.getUserId(), requestParam.getRemindTime(), requestParam.getType())));
 
         // 删除用户预约提醒的缓存信息，通过更新数据库删除缓存策略保障数据库和缓存一致性
-        stringRedisTemplate.delete(EngineRedisConstant.USER_COUPON_TEMPLATE_REMIND_INFORMATION + UserContext.getUserId());
+        stringRedisTemplate.delete(USER_COUPON_TEMPLATE_REMIND_INFORMATION + UserContext.getUserId());
 
     }
 
@@ -202,6 +247,8 @@ public class CouponTemplateRemindServiceImpl extends ServiceImpl<CouponTemplateR
         /**
          * 由于 RocketMQ 消费者在执行预约提醒时都需要查看该提醒是否已被取消，所以这里需要将用户取消提醒的记录写入布隆过滤器，减轻数据库压力
          * hash(couponTemplateId + userId + remindType + remindTime)
+         * todo: 这里似乎存在漏洞 -> 假如用户取消了预约，该条信息加入了布隆过滤器。用户又重新预约了该提醒，此时该信息仍在布隆过滤器中。
+         * todo: 是否需要改成用缓存处理呢？
          */
         cancelRemindBloomFilter.add(String.valueOf(Objects.hash(requestParam.getCouponTemplateId(), UserContext.getUserId(), requestParam.getRemindTime(), requestParam.getType())));
 

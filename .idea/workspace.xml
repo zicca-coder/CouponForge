@@ -4,9 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="930962b7-3e5e-436c-8225-e575408c149b" name="Changes" comment="开发优惠券预约通知功能：&#10;1. 基于 BitMap 存储用户预约信息，通过 long 类型字段 存储 5 * 12 种单独预约状态以及指数级叠加预约状态。&#10;2. 用户提交预约请求后将用户预约信息存入数据库，利用 RocketMQ 消息队列，等到用户预约的时间将提醒消息推送给用户。&#10;3. 对推送业务解耦：推送消息属于耗时网络 IO 操作，RocketMQ 消费者默认单线程拉取并消费消息，同步处理容易导致消息堆积，因此开启线程池异步处理消息推送操作，RocketMQ 消费者仅负责从 Broker 拉取消息并提交给线程池处理。&#10;4. 为避免 RockerMQ 消费者将消息提交到线程池后应用宕机，通过 Redis 延迟队列进行兜底处理">
+    <list default="true" id="930962b7-3e5e-436c-8225-e575408c149b" name="Changes" comment="开发取消优惠券预约通知功能：&#10;1. 利用 BitMap 的 &amp; 运算来判断当前时间点是否预约过提醒；利用 BitMap 的 ^ 运算来取消当前时间点的预约提醒。&#10;2. 用户取消预约后，RocketMQ 消费者无法感知，因此每次执行前判断预约是否已被取消。为了避免每次查询数据库带来的压力，引入布隆过滤器将取消掉的预约加入布隆过滤器，过滤大部分请求。">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/service/impl/CouponTemplateServiceRemindImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/service/impl/CouponTemplateRemindServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/controller/CouponTemplateRemindController.java" beforeDir="false" afterPath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/controller/CouponTemplateRemindController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/service/impl/CouponTemplateRemindServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/service/impl/CouponTemplateRemindServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/service/impl/CouponTemplateServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/service/impl/CouponTemplateServiceImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -63,6 +65,7 @@
     <setting file="file://$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/service/UserCouponService.java" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/service/handler/remind/CouponTemplateRemindExecutor.java" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/service/handler/remind/dto/CouponTemplateRemindDTO.java" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/service/impl/CouponTemplateRemindServiceImpl.java" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/service/impl/CouponTemplateServiceImpl.java" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/engine/src/main/java/com/example/coupon/engine/service/impl/UserCouponServiceImpl.java" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/engine/src/main/resources/lua/stock_decrement_and_save_user_receive.lua" root0="SKIP_INSPECTION" />
@@ -237,7 +240,7 @@
       <workItem from="1748141540231" duration="1891000" />
       <workItem from="1748155212408" duration="2857000" />
       <workItem from="1748158200982" duration="16838000" />
-      <workItem from="1748224048199" duration="1785000" />
+      <workItem from="1748224048199" duration="4984000" />
     </task>
     <task id="LOCAL-00001" summary="新增engine模块：增加查询优惠券模板接口，并通过缓存预热、设置缓存过期时间、双重判定锁来解决缓存击穿问题。通过缓存空置、布隆过滤器来解决缓存穿透问题。">
       <option name="closed" value="true" />
@@ -311,7 +314,15 @@
       <option name="project" value="LOCAL" />
       <updated>1748182551007</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="开发取消优惠券预约通知功能：&#10;1. 利用 BitMap 的 &amp; 运算来判断当前时间点是否预约过提醒；利用 BitMap 的 ^ 运算来取消当前时间点的预约提醒。&#10;2. 用户取消预约后，RocketMQ 消费者无法感知，因此每次执行前判断预约是否已被取消。为了避免每次查询数据库带来的压力，引入布隆过滤器将取消掉的预约加入布隆过滤器，过滤大部分请求。">
+      <option name="closed" value="true" />
+      <created>1748226544612</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1748226544612</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -327,7 +338,8 @@
     <MESSAGE value="完善用户领取（秒杀）优惠券功能：&#10;引入消息队列进行异步解耦，主流程仅同步操作 Redis, 后续的数据库耗时操作交由消息队列消费者来执行，从而提升整体性能。" />
     <MESSAGE value="重构用户领取（秒杀）优惠券功能（非消息队列版本）：数据库持久化完成后，后续的缓存过程不在主流程中执行，同 Canal 监听 MySQL，配合 RocketMQ 来异步执行后续的缓存工作。&#10;Canal 监听到 t_user_coupon 中新增记录（利用binlog），向 RocketMQ 发送一条变更消息，CanalBinlogSyncUserCouponConsumer 消费该消息，执行后续缓存工作。" />
     <MESSAGE value="开发优惠券预约通知功能：&#10;1. 基于 BitMap 存储用户预约信息，通过 long 类型字段 存储 5 * 12 种单独预约状态以及指数级叠加预约状态。&#10;2. 用户提交预约请求后将用户预约信息存入数据库，利用 RocketMQ 消息队列，等到用户预约的时间将提醒消息推送给用户。&#10;3. 对推送业务解耦：推送消息属于耗时网络 IO 操作，RocketMQ 消费者默认单线程拉取并消费消息，同步处理容易导致消息堆积，因此开启线程池异步处理消息推送操作，RocketMQ 消费者仅负责从 Broker 拉取消息并提交给线程池处理。&#10;4. 为避免 RockerMQ 消费者将消息提交到线程池后应用宕机，通过 Redis 延迟队列进行兜底处理" />
-    <option name="LAST_COMMIT_MESSAGE" value="开发优惠券预约通知功能：&#10;1. 基于 BitMap 存储用户预约信息，通过 long 类型字段 存储 5 * 12 种单独预约状态以及指数级叠加预约状态。&#10;2. 用户提交预约请求后将用户预约信息存入数据库，利用 RocketMQ 消息队列，等到用户预约的时间将提醒消息推送给用户。&#10;3. 对推送业务解耦：推送消息属于耗时网络 IO 操作，RocketMQ 消费者默认单线程拉取并消费消息，同步处理容易导致消息堆积，因此开启线程池异步处理消息推送操作，RocketMQ 消费者仅负责从 Broker 拉取消息并提交给线程池处理。&#10;4. 为避免 RockerMQ 消费者将消息提交到线程池后应用宕机，通过 Redis 延迟队列进行兜底处理" />
+    <MESSAGE value="开发取消优惠券预约通知功能：&#10;1. 利用 BitMap 的 &amp; 运算来判断当前时间点是否预约过提醒；利用 BitMap 的 ^ 运算来取消当前时间点的预约提醒。&#10;2. 用户取消预约后，RocketMQ 消费者无法感知，因此每次执行前判断预约是否已被取消。为了避免每次查询数据库带来的压力，引入布隆过滤器将取消掉的预约加入布隆过滤器，过滤大部分请求。" />
+    <option name="LAST_COMMIT_MESSAGE" value="开发取消优惠券预约通知功能：&#10;1. 利用 BitMap 的 &amp; 运算来判断当前时间点是否预约过提醒；利用 BitMap 的 ^ 运算来取消当前时间点的预约提醒。&#10;2. 用户取消预约后，RocketMQ 消费者无法感知，因此每次执行前判断预约是否已被取消。为了避免每次查询数据库带来的压力，引入布隆过滤器将取消掉的预约加入布隆过滤器，过滤大部分请求。" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

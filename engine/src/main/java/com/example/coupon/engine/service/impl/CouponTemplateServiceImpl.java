@@ -3,6 +3,7 @@ package com.example.coupon.engine.service.impl;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.bean.copier.CopyOptions;
 import cn.hutool.core.map.MapUtil;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.coupon.engine.common.constant.EngineRedisConstant;
 import com.example.coupon.engine.common.enums.CouponTemplateStatusEnum;
@@ -132,8 +133,27 @@ public class CouponTemplateServiceImpl extends ServiceImpl<CouponTemplateMapper,
         return BeanUtil.mapToBean(couponTemplateCacheMap, CouponTemplateQueryRespDTO.class, false, CopyOptions.create());
     }
 
+    // todo: 如果分库分表，该方法需要重构
     @Override
     public List<CouponTemplateDO> listCouponTemplateByIds(List<Long> couponTemplateIds, List<Long> shopNumbers) {
-        return List.of();
+        if (couponTemplateIds == null || shopNumbers == null || couponTemplateIds.size() != shopNumbers.size()) {
+            return Collections.emptyList();
+        }
+
+        LambdaQueryWrapper<CouponTemplateDO> queryWrapper = new LambdaQueryWrapper<>();
+        for (int i = 0; i < couponTemplateIds.size(); i++) {
+            Long id = couponTemplateIds.get(i);
+            Long shopNumber = shopNumbers.get(i);
+            if (i == 0) {
+                queryWrapper.eq(CouponTemplateDO::getId, id)
+                        .eq(CouponTemplateDO::getShopNumber, shopNumber);
+            } else {
+                queryWrapper.or(wrapper -> wrapper
+                        .eq(CouponTemplateDO::getId, id)
+                        .eq(CouponTemplateDO::getShopNumber, shopNumber));
+            }
+        }
+
+        return baseMapper.selectList(queryWrapper);
     }
 }
